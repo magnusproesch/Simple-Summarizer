@@ -6,6 +6,7 @@ https://github.com/jodylecompte/Simple-Summarizer
 """
 import argparse
 
+from goose3 import Goose
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.corpus import stopwords
 from string import punctuation
@@ -15,11 +16,24 @@ from collections import defaultdict
 
 def main():
     """ Drive the process from argument to output """
+
     args = parse_arguments()
+    source = int(input ('read file (1) or url (2): '))
 
-    content = read_file(args.filepath)
+    if source == 1:
+
+        content = read_file(args.filepath)
+
+    elif source == 2:
+        link = args.url
+        g = Goose()
+        article = g.extract(url=link)
+        content = article.cleaned_text
+
+    else:
+        print ('invalid input')
+
     content = sanitize_input(content)
-
     sentence_tokens, word_tokens = tokenize_content(content)
     sentence_ranks = score_tokens(word_tokens, sentence_tokens)
 
@@ -28,8 +42,9 @@ def main():
 def parse_arguments():
     """ Parse command line arguments """
     parser = argparse.ArgumentParser()
-    parser.add_argument('filepath', help='File name of text to summarize')
-    parser.add_argument('-l', '--length', default=4, help='Number of sentences to return')
+    #parser.add_argument('filepath', help='File name of text to summarize', required='False')
+    parser.add_argument('url', help='Url of text to summarize')
+    parser.add_argument('-l', '--length', default=10, help='Number of sentences to return')
     args = parser.parse_args()
 
     return args
