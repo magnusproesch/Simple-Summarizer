@@ -18,8 +18,8 @@ def main():
     """ Drive the process from argument to output """
 
     args = parse_arguments()
-    source = int(input ('read file (1) or url (2): '))
 
+    source = int(input ('read file (1) or url (2): '))
     if source == 1:
 
         content = read_file(args.filepath)
@@ -42,9 +42,9 @@ def main():
 def parse_arguments():
     """ Parse command line arguments """
     parser = argparse.ArgumentParser()
-    #parser.add_argument('filepath', help='File name of text to summarize', required='False')
-    parser.add_argument('url', help='Url of text to summarize')
-    parser.add_argument('-l', '--length', default=4, help='Number of sentences to return')
+    parser.add_argument('-filepath', help='File name of text to summarize')
+    parser.add_argument('-url', help='Url of text to summarize')
+    parser.add_argument('-l', '--length', default=4, type=int, help='Number of sentences to return')
     args = parser.parse_args()
 
     return args
