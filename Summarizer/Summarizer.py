@@ -39,6 +39,8 @@ def main():
 
     return summarize(sentence_ranks, sentence_tokens, args.length)
 
+### test for maja
+
 def parse_arguments():
     """ Parse command line arguments """
     parser = argparse.ArgumentParser()
